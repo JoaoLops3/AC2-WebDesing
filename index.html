@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar, footer {
+            background-color: #000; /* Cor preta para Navbar e rodapé */
+        }
+        .navbar .nav-link {
+            color: #ccc;
+            margin-right: 15px;
+        }
+        .navbar .nav-link:hover {
+            color: #fff;
+        }
+        .search-form {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+        .form-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .custom-form {
+            background-color: #f8f9fa; /* Cor clara para o formulário */
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar o formulário */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Azul Bootstrap */
+            font-size: 1.2rem; /* Aumenta o tamanho do botão */
+            padding: 0.6rem 1.2rem;
+        }
+        .btn-danger-custom {
+            background-color: #dc3545; /* Vermelho Bootstrap */
+            font-size: 1.2rem; /* Aumenta o tamanho do botão */
+            padding: 0.6rem 1.2rem;
+            color: black; /* Texto preto */
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px; /* Espaço entre os cards */
+            margin-top: 20px;
+            margin-bottom: 80px; /* Adiciona espaço inferior para o botão "Apagar Todos" */
+        }
+        .card {
+        margin-bottom: 20px; /* Espaço inferior entre os cards */
+        width: 18rem;
+
+    }
+        .bottom-btn-container {
+            position: fixed;
+            bottom: 50px; /* Ajustado para não ficar tão próximo do rodapé */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1; /* Garante que o botão fique acima dos elementos da página */
+        }
+        footer {
+            margin-top: auto;
+            color: #fff; /* Texto branco no rodapé */
+            font-size: 1rem;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Bootstrap</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#">Bio</a>
+                <a class="nav-link" href="#">Contato</a>
+            </div>
+            <form class="search-form d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Formulário -->
+    <div class="container form-container">
+        <div class="custom-form col-md-6">
+            <div class="mb-3">
+                <input type="text" id="titulo" class="form-control" placeholder="Título">
+            </div>
+            <button class="btn btn-primary" onclick="cadastrar()">Cadastrar</button>
+        </div>
+    </div>
+
+    <!-- Área dos Cards -->
+    <div class="container">
+        <div class="row card-container" id="card-container">
+            <!-- Cards serão inseridos dinamicamente aqui -->
+        </div>
+    </div>
+
+    <!-- Botão Apagar Todos -->
+    <div class="bottom-btn-container">
+        <button class="btn btn-danger-custom" onclick="apagarTodos()">APAGAR TODOS</button>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="text-white text-center py-3">
+        Copyright Facens©2024 - Webdesign - [JOÃO GABRIEL LOPES AGUIAR, BRUNNO EDUARDO MARFIL MARINS]
+    </footer>
+
+    <script>
+        // Função para cadastrar um novo card
+        function cadastrar() {
+            const titulo = document.getElementById("titulo").value;
+            if (titulo === "") {
+                alert("Por favor, insira um título.");
+                return;
+            }
+
+            const cardContainer = document.getElementById("card-container");
+
+            // Cria o card dinamicamente
+            const card = document.createElement("div");
+            card.className = "col-md-3";
+            card.innerHTML = `
+                <div class="card">
+                    <img src="https://picsum.photos/200/150" class="card-img-top" alt="Imagem">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">${titulo}</h5>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-danger-custom" onclick="apagarCard(this)">Apagar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            cardContainer.appendChild(card);
+
+            // Limpa o campo de input
+            document.getElementById("titulo").value = "";
+        }
+
+        // Função para apagar um card específico
+        function apagarCard(button) {
+            button.parentElement.parentElement.parentElement.remove();
+        }
+
+        // Função para apagar todos os cards
+        function apagarTodos() {
+            document.getElementById("card-container").innerHTML = "";
+        }
+    </script>
+
+</body>
+</html>
